@@ -1,0 +1,14 @@
+{if !empty($url)}
+    <form id="payment-form" action="{$url}" method="get" target="_blank">
+        {if $auto_submit}
+            <i class="icon16 loading"></i> <em>{if $settings->redirect_text != ''}{$settings->redirect_text|escape}{else}[`Перенаправление на сайт «PaySelection»...`]{/if}</em>
+            <br /><br />
+            <script type="text/javascript">
+                setTimeout(function () {
+                    document.getElementById('payment-form').submit();
+                }, 3000);
+            </script>
+        {/if}
+        <input type="submit" value="{if $settings->pay_text != ''}{$settings->pay_text|escape}{else}[`Оплатить на сайте «PaySelection»`]{/if}" />
+    </form>
+{/if}
