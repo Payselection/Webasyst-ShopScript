@@ -1,7 +1,4 @@
 <?php
-
-ini_set('serialize_precision', 12);
-
 class payselectionPayment extends waPayment implements waIPayment, waIPaymentCancel, waIPaymentCapture, waIPaymentRefund
 {
     protected $host = array(
@@ -345,7 +342,7 @@ class payselectionPayment extends waPayment implements waIPayment, waIPaymentCan
     protected function callbackInit($request)
     {
         if ($this->log) {
-            $headers = getallheaders();
+            $headers = $this->getallheaders();
             $body = file_get_contents('php://input');
             waLog::dump([$headers, $body], 'payselection.' . $this->app_id . '.' . $this->merchant_id . '.777.log');
         }
@@ -358,13 +355,13 @@ class payselectionPayment extends waPayment implements waIPayment, waIPaymentCan
     protected function callbackHandler($request)
     {
         if ($this->log) {
-            $headers = getallheaders();
+            $headers = $this->getallheaders();
             $body = file_get_contents('php://input');
             waLog::dump([$headers, $body], 'payselection.' . $this->app_id . '.' . $this->merchant_id . '.777.log');
         }
         switch (waRequest::get('transaction_result', '')) {
             case 'webhook':
-                $headers = getallheaders();
+                $headers = $this->getallheaders();
                 $body = file_get_contents('php://input');
                 if ($this->log) {
                     waLog::dump([$headers, $body], 'payselection.' . $this->app_id . '.' . $this->merchant_id . '.log');
@@ -492,11 +489,13 @@ class payselectionPayment extends waPayment implements waIPayment, waIPaymentCan
             return empty($res['TransactionId']);
         }
     }
-}
 
-if (!function_exists('getallheaders')) {
-    function getallheaders()
+    public function getallheaders()
     {
+        if(function_exists('getallheaders')) {
+            return getallheaders();
+        }
+
         $headers = [];
         foreach ($_SERVER as $name => $value) {
             if (substr($name, 0, 5) == 'HTTP_') {
