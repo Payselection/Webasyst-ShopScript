@@ -41,7 +41,12 @@ class payselectionPayment extends waPayment implements waIPayment, waIPaymentCan
         $string .= $this->getRelayUrl() . '?app_id=' . $this->app_id . '&merchant_id=' . $this->merchant_id . '&order_id=' . $this->order_id . '&transaction_result=webhook' . PHP_EOL;
         $string .= $this->site_id . PHP_EOL;
         $string .= file_get_contents('php://input');
-        return hash_hmac('sha256', $string, $this->secret_key, false);
+        $signature = hash_hmac('sha256', $string, $this->secret_key, false);
+        if ($this->log) {
+            $headers = $this->getallheaders();
+            waLog::dump([$headers, $string, $signature], 'payselection.' . $this->app_id . '.' . $this->merchant_id . '.log');
+        }
+        return $signature;
     }
 
     public function query($api_method, $content, $method = waNet::METHOD_POST, $type_host = 'gw')
@@ -357,15 +362,12 @@ class payselectionPayment extends waPayment implements waIPayment, waIPaymentCan
         if ($this->log) {
             $headers = $this->getallheaders();
             $body = file_get_contents('php://input');
-            waLog::dump([$headers, $body], 'payselection.' . $this->app_id . '.' . $this->merchant_id . '.777.log');
+            waLog::dump([$headers, $body], 'payselection.' . $this->app_id . '.' . $this->merchant_id . '.log');
         }
         switch (waRequest::get('transaction_result', '')) {
             case 'webhook':
                 $headers = $this->getallheaders();
                 $body = file_get_contents('php://input');
-                if ($this->log) {
-                    waLog::dump([$headers, $body], 'payselection.' . $this->app_id . '.' . $this->merchant_id . '.log');
-                }
                 if ($this->getWebhookSignature() != ifset($headers, 'X-WEBHOOK-SIGNATURE', '')) {
                     throw new Exception('Incorrect signature', 403);
                 } else {
@@ -493,13 +495,19 @@ class payselectionPayment extends waPayment implements waIPayment, waIPaymentCan
     public function getallheaders()
     {
         if(function_exists('getallheaders')) {
-            return getallheaders();
+            $headers = getallheaders();
+        } else {
+            $headers = [];
+            foreach ($_SERVER as $name => $value) {
+                if (substr($name, 0, 5) == 'HTTP_') {
+                    $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+                }
+            }
         }
 
-        $headers = [];
-        foreach ($_SERVER as $name => $value) {
-            if (substr($name, 0, 5) == 'HTTP_') {
-                $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+        foreach ($headers as $k => $v) {
+            if($k != strtoupper($k)) {
+                $headers[strtoupper($k)] = $v;
             }
         }
         return $headers;
