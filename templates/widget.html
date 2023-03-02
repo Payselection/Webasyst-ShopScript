@@ -29,6 +29,12 @@
             },
         );
     };
+{if $settings->form_type == 'autoprewidget' OR $settings->form_type == 'autowidget'}
+    document.addEventListener("DOMContentLoaded", function(event) {
+        payselection();
+    });
+{/if}
 </script>
-
-<input type="button" id="checkout" onclick="payselection();" value="{if $settings->pay_text != ''}{$settings->pay_text|escape}{else}[`Оплатить через «PaySelection»`]{/if}" />
+{if $settings->form_type == 'prewidget' OR $settings->form_type == 'widget'}
+    <input type="button" id="checkout" onclick="payselection();" value="{if $settings->pay_text != ''}{$settings->pay_text|escape}{else}[`Оплатить через «PaySelection»`]{/if}" />
+{/if}

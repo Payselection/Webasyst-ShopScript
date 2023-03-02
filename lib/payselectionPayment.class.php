@@ -90,7 +90,7 @@ class payselectionPayment extends waPayment implements waIPayment, waIPaymentCan
             'MetaData' => array(
                 'PaymentType' => $this->payment_type,
                 'TypeLink' => 'Reusable',
-                'PreviewForm' => $this->form_type == 'prewidget'
+                'PreviewForm' => $this->form_type == 'prewidget' OR $this->form_type == 'autoprewidget'
             ),
             'PaymentRequest' => array(
                 'OrderId' => (string)$order_data->id_str,

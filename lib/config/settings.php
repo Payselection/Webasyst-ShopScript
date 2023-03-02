@@ -50,6 +50,14 @@ $settings = array(
                 'title' => /*_w*/('виджет'),
                 'value' => 'widget'
             ),
+            array(
+                'title' => /*_w*/('виджет с предэкраном с автозапуском'),
+                'value' => 'autoprewidget'
+            ),
+            array(
+                'title' => /*_w*/('виджет с автозапуском'),
+                'value' => 'autowidget'
+            ),
         ),
     ),
     'currency'      => array(
