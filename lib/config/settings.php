@@ -133,6 +133,29 @@ $settings = array(
             ),
         ),
     ),
+    'payment_method'      => array(
+        'value'        => 'full_payment',
+        'title'        => /*_w*/('Признак способа расчёта'),
+        'control_type' => waHtmlControl::SELECT,
+        'options'      => array(
+            array(
+                'value' => 'full_prepayment',
+                'title' => /*_w*/('Предоплата 100%')
+            ),
+            array(
+                'value' => 'prepayment',
+                'title' => /*_w*/('Предоплата')
+            ),
+            array(
+                'value' => 'advance',
+                'title' => /*_w*/('Аванс')
+            ),
+            array(
+                'value' => 'full_payment',
+                'title' => /*_w*/('Полный расчет')
+            ),
+        ),
+    ),
     'log'      => array(
         'value'        => '',
         'title'        => 'Запись логов',

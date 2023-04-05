@@ -154,7 +154,7 @@ class payselectionPayment extends waPayment implements waIPayment, waIPaymentCan
                     'price' => round($item['price'],2),
                     'quantity' => round($item['quantity'], 3),
                     'sum' => round($item['total'], 3),
-                    'payment_method' => $this->payment_type == 'Block' ? 'full_prepayment' : 'full_payment',
+                    'payment_method' => $this->payment_method,
                     'payment_object' => $item['type'] == 'product' ? 'commodity' : 'service',
                     'vat' => array(
                         'type' => $tax
@@ -180,7 +180,7 @@ class payselectionPayment extends waPayment implements waIPayment, waIPaymentCan
                     'price' => round($order_data['shipping'],2),
                     'quantity' => 1,
                     'sum' => round($order_data['shipping'], 3),
-                    'payment_method' => $this->payment_type == 'Block' ? 'full_prepayment' : 'full_payment',
+                    'payment_method' => $this->payment_method,
                     'payment_object' => 'service',
                     'vat' => array(
                         'type' => $tax
