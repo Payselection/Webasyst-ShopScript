@@ -187,7 +187,7 @@ $settings = array(
             ),
         ),
     ),
-    'payment_type'     => array(
+    'payments_type'     => array(
         'value'        => '1',
         'title'        => /*_w*/('Вид оплаты'),
         'control_type' => waHtmlControl::SELECT,
