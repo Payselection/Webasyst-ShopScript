@@ -119,12 +119,13 @@ class payselectionPayment extends waPayment implements waIPayment, waIPaymentCan
                     ),
                     'company' => array(
                         'payment_address' => wa()->getRootUrl(true, true),
-                        'inn' => $this->inn
+                        'inn' => $this->inn,
+                        'sno' => $this->sno
                     ),
                     'total' => round($order_data->total, 2),
                     'payments' => array(
                         array(
-                            'type' => $this->payment_type == 'Block' ? 2 : 1,
+                            'type' => (string)$this->payment_type,
                             'sum' => round($order_data->total, 2)
                         )
                     )
@@ -220,7 +221,8 @@ class payselectionPayment extends waPayment implements waIPayment, waIPaymentCan
                     ),
                     'company' => array(
                         'payment_address' => wa()->getRootUrl(true, true),
-                        'inn' => $this->inn
+                        'inn' => $this->inn,
+                        'sno' => $this->sno
                     ),
                     'total' => round($order_data->total, 2),
                     'payments' => array(

@@ -99,6 +99,37 @@ $settings = array(
         'title'        => /*_w*/('ИНН организации'),
         'control_type' => waHtmlControl::INPUT,
     ),
+    'sno'      => array(
+        'value'        => 'osn',
+        'title'        => /*_w*/('Система налогообложения'),
+        'control_type' => waHtmlControl::SELECT,
+        'options'      => array(
+            array(
+                'value' => 'osn',
+                'title' => /*_w*/('Общая СН')
+            ),
+            array(
+                'value' => 'usn_income',
+                'title' => /*_w*/('Упрощенная СН (доходы)')
+            ),
+            array(
+                'value' => 'usn_income_outcome',
+                'title' => /*_w*/('Упрощенная СН (доходы минус расходы)')
+            ),
+            array(
+                'value' => 'envd',
+                'title' => /*_w*/('Единый налог на вмененный доход')
+            ),
+            array(
+                'value' => 'esn',
+                'title' => /*_w*/('Единый сельскохозяйственный налог')
+            ),
+            array(
+                'value' => 'patent',
+                'title' => /*_w*/('Патентная СН')
+            ),
+        ),
+    ),
     'tax'      => array(
         'value'        => '',
         'title'        => /*_w*/('Источник значения НДС'),
@@ -153,6 +184,29 @@ $settings = array(
             array(
                 'value' => 'full_payment',
                 'title' => /*_w*/('Полный расчет')
+            ),
+        ),
+    ),
+    'payment_type'     => array(
+        'value'        => '1',
+        'title'        => /*_w*/('Вид оплаты'),
+        'control_type' => waHtmlControl::SELECT,
+        'options'      => array(
+            array(
+                'title' => /*_w*/('Безналичный'),
+                'value' => '1'
+            ),
+            array(
+                'title' => /*_w*/('Предварительная оплата'),
+                'value' => '2'
+            ),
+            array(
+                'title' => /*_w*/('Постоплата'),
+                'value' => '3'
+            ),
+            array(
+                'title' => /*_w*/('Иная форма оплаты'),
+                'value' => '4'
             ),
         ),
     ),
