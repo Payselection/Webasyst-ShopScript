@@ -187,6 +187,29 @@ $settings = array(
             ),
         ),
     ),
+    'payment_type'     => array(
+        'value'        => '1',
+        'title'        => /*_w*/('Вид оплаты'),
+        'control_type' => waHtmlControl::SELECT,
+        'options'      => array(
+            array(
+                'title' => /*_w*/('Безналичный'),
+                'value' => '1'
+            ),
+            array(
+                'title' => /*_w*/('Предварительная оплата'),
+                'value' => '2'
+            ),
+            array(
+                'title' => /*_w*/('Постоплата'),
+                'value' => '3'
+            ),
+            array(
+                'title' => /*_w*/('Иная форма оплаты'),
+                'value' => '4'
+            ),
+        ),
+    ),
     'log'      => array(
         'value'        => '',
         'title'        => 'Запись логов',

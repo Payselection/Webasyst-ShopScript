@@ -125,7 +125,7 @@ class payselectionPayment extends waPayment implements waIPayment, waIPaymentCan
                     'total' => round($order_data->total, 2),
                     'payments' => array(
                         array(
-                            'type' => $this->payment_type == 'Block' ? 2 : 1,
+                            'type' => (string)$this->payment_type,
                             'sum' => round($order_data->total, 2)
                         )
                     )
